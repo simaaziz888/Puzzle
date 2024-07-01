@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle 8 Solver</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            margin: 10px;
+            padding: 10px;
+            width: calc(100% - 24px);
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        #footer-container {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Puzzle 8 Solver</h1>
+        <div class="input-group">
+            <!-- Input for the initial state of the puzzle -->
+            <label for="initialState">Initial State:</label>
+            <input type="text" id="initialState" value="6 5 3 1 0 8 7 2 4">
+        </div>
+        <div class="input-group">
+            <!-- Input for the goal state of the puzzle -->
+            <label for="goalState">Goal State:</label>
+            <input type="text" id="goalState" value="0 1 2 3 4 5 6 7 8">
+        </div>
+        <!-- Button to solve the puzzle -->
+        <button onclick="solvePuzzle()">Solve</button>
+        <!-- Output area for the solution -->
+        <div id="output"></div>
+    </div>
+    <div id="footer-container">
+        <p>Developed By the students</p>
+        <p>Sima Aziz: sema_195926</p>
+        <p>Layla Nayouf: layla_197901</p>
+        <p>Ismail Basbous: ismail_158818</p>
+        <p>Class: C3</p>
+    </div>
+    <script>
+        function solvePuzzle() {
+            const initialState = document.getElementById('initialState').value; // Get the initial state
+            const goalState = document.getElementById('goalState').value; // Get the goal state
+
+            // Send a POST request to the server with the initial and goal states
+            fetch('/solve', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ initialState, goalState }) // Convert data to JSON
+            })
+                .then(response => response.json()) // Parse the response as JSON
+                .then(data => {
+                    // Display the result in the output area
+                    document.getElementById('output').innerText = data.result;
+                })
+                .catch(error => console.error('Error:', error)); // Handle any errors
+        }
+    </script>
+</body>
+
+</html>
